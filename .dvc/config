@@ -1,0 +1,4 @@
+[core]
+    remote = remoterepo
+['remote "remoterepo"']
+    url = s3://diego-bucket-udacity
