@@ -15,7 +15,7 @@ logger = logging.getLogger()
 
 # Add code to load in the data.
 def ingest_data(path):
-    file_path = os.path.join(path, "data", "census.csv")
+    file_path = os.path.join(path, "..", "data", "census_clean.csv")
     df = pd.read_csv(file_path)
     return df
 
@@ -46,7 +46,8 @@ def go():
     )
     # Proces the test data with the process_data function.
     X_test, y_test, _, _ = process_data(
-        test, categorical_features=cat_features, label="salary", training=False
+        test, categorical_features=cat_features, label="salary", training=False,
+        encoder=encoder, lb=lb
     )
 
     # Train and save a model.
@@ -56,19 +57,19 @@ def go():
     preds = inference(model, X_test)
     precision, recall, fbeta = compute_model_metrics(y_test, preds)
     
-    logger.info(f"Precision: {:.2f}".format(precision))
-    logger.info(f"Recall: {:.2f}".format(recall))
-    logger.info(f"Fbeta: {:.2f}".format(fbeta))
+    logger.info("Precision: {:.2f}".format(precision))
+    logger.info("Recall: {:.2f}".format(recall))
+    logger.info("Fbeta: {:.2f}".format(fbeta))
 
     # Dumps
     logger.info("Dumping objects")    
-    model_path = os.path.join(path, 'model', 'finalized_model.sav')
+    model_path = os.path.join(path, "..", 'model', 'finalized_model.sav')
     joblib.dump(model, model_path)
 
-    cat_encoder_path = os.path.join(path, 'model', 'cat_encoder.sav')
+    cat_encoder_path = os.path.join(path, "..", 'model', 'cat_encoder.sav')
     joblib.dump(encoder, cat_encoder_path)
     
-    lb_encoder_path = os.path.join(path, 'model', 'lb_encoder.sav')
+    lb_encoder_path = os.path.join(path, "..", 'model', 'lb_encoder.sav')
     joblib.dump(lb, lb_encoder_path)
 
 

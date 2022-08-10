@@ -1,0 +1,4 @@
+outs:
+- md5: 60796d32acbf55174d3086bf8dc88677
+  size: 3995
+  path: cat_encoder.sav

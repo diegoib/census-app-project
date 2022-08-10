@@ -1,4 +1,4 @@
-from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 import sys
 sys.path.append('../')
 
@@ -35,7 +35,7 @@ def test_train_model(data):
         "native-country",
     ]
     X_train, y_train, encoder, lb = process_data(
-        train, categorical_features=cat_features, label="salary", training=True
+        data, categorical_features=cat_features, label="salary", training=True
     )
     
     model = train_model(X_train, y_train)
@@ -54,7 +54,7 @@ def test_inference(data):
         "native-country",
     ]
     X_train, y_train, encoder, lb = process_data(
-        train, categorical_features=cat_features, label="salary", training=True
+        data, categorical_features=cat_features, label="salary", training=True
     )
     
     model = train_model(X_train, y_train)
