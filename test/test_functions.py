@@ -1,3 +1,4 @@
+from sklearn.model_selection import train_test_split
 import sys
 sys.path.append('../')
 
@@ -20,3 +21,43 @@ def test_process_data(data):
     assert X.shape[0] > 0
     assert X.shape[1] > 0
     assert y.shape[0] > 0
+
+
+def test_train_model(data):
+    cat_features = [
+        "workclass",
+        "education",
+        "marital-status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "native-country",
+    ]
+    X_train, y_train, encoder, lb = process_data(
+        train, categorical_features=cat_features, label="salary", training=True
+    )
+    
+    model = train_model(X_train, y_train)
+    assert isinstance(model, LogisticRegression)
+
+
+def test_inference(data):
+    cat_features = [
+        "workclass",
+        "education",
+        "marital-status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "native-country",
+    ]
+    X_train, y_train, encoder, lb = process_data(
+        train, categorical_features=cat_features, label="salary", training=True
+    )
+    
+    model = train_model(X_train, y_train)
+    preds = inference(model, X_train)
+
+    assert preds.shape[0] > 0
