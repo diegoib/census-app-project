@@ -1,9 +1,11 @@
 from sklearn.linear_model import LogisticRegression
+
 import sys
-sys.path.append('../')
+sys.path.append('./')
 
 from src.ml.data import process_data
 from src.ml.model import train_model, inference, compute_model_metrics
+
 
 def test_process_data(data):
     cat_features = [
