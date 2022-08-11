@@ -1,4 +1,5 @@
-# Script to train machine learning model.
+import sys
+sys.path.append('./')
 
 from sklearn.model_selection import train_test_split
 import pandas as pd
@@ -6,16 +7,15 @@ import logging
 import joblib
 import os
 
-# Add the necessary imports for the starter code.
-from ml.data import process_data
-from ml.model import train_model, compute_model_metrics, inference
+from src.ml.data import process_data
+from src.ml.model import train_model, compute_model_metrics, inference, evaluate_slices
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
-# Add code to load in the data.
+
 def ingest_data(path):
-    file_path = os.path.join(path, "..", "data", "census_clean.csv")
+    file_path = os.path.join(path, "data", "census_clean.csv")
     df = pd.read_csv(file_path)
     return df
 
@@ -61,15 +61,21 @@ def go():
     logger.info("Recall: {:.2f}".format(recall))
     logger.info("Fbeta: {:.2f}".format(fbeta))
 
+    # Evaluate slices of the data
+    logger.info("Evaluating slices")
+
+    evaluate_slices(test, y_test, preds, ['sex', 'race', 'native-country'])
+
     # Dumps
-    logger.info("Dumping objects")    
-    model_path = os.path.join(path, "..", 'model', 'finalized_model.sav')
+    logger.info("Dumping objects")
+        
+    model_path = os.path.join(path, 'model', 'finalized_model.sav')
     joblib.dump(model, model_path)
 
-    cat_encoder_path = os.path.join(path, "..", 'model', 'cat_encoder.sav')
+    cat_encoder_path = os.path.join(path, 'model', 'cat_encoder.sav')
     joblib.dump(encoder, cat_encoder_path)
     
-    lb_encoder_path = os.path.join(path, "..", 'model', 'lb_encoder.sav')
+    lb_encoder_path = os.path.join(path, 'model', 'lb_encoder.sav')
     joblib.dump(lb, lb_encoder_path)
 
 

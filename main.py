@@ -1,44 +1,20 @@
-from typing import List
-
-from fastapi import FastAPI
-from fastapi.encoders import jsonable_encoder
-# BaseModel from Pydantic is used to define data objects.
-from pydantic import BaseModel, Field
-import pandas as pd
-import json
-import numpy as np
-
-import joblib
-from src.ml.data import process_data
-from src.ml.model import inference
 
 import sys
 sys.path.append('./')
 
-# Declare the data object with its components and their type.
-class Item(BaseModel):
-    age: int
-    workclass: str
-    fnlgt: int
-    education: str
-    education_num: int = Field(alias='education-num')
-    marital_status: str = Field(alias='marital-status')
-    occupation: str
-    relationship: str
-    race: str
-    sex: str
-    capital_gain: int = Field(alias='capital-gain')
-    capital_loss: int = Field(alias='capital-loss')
-    hours_per_week: int = Field(alias='hours-per-week')
-    native_country: str = Field(alias='native-country')
+from fastapi import FastAPI
 
-class Response(BaseModel):
-    prediction: int
+import pandas as pd
+import numpy as np
+import joblib
+from src.ml.data import process_data
+from src.ml.model import inference
+from src.schemas import Item, Response
+
 
 
 app = FastAPI()
 
-# This allows sending of data (our TaggedItem) via POST to the API.
 @app.get("/")
 async def welcome_message():
     return "Welcome to the API. Check the docs at '/docs'"

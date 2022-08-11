@@ -6,21 +6,22 @@ sys.path.append('./')
 
 from main import app
 
-# Instantiate the testing client with our app.
 client = TestClient(app)
 
-# Write tests using the same syntax as with the requests module.
 def test_api_locally_get_root():
     r = client.get("/")
     assert r.status_code == 200
+    assert r.json() == "Welcome to the API. Check the docs at '/docs'"
 
-def test_api_prediction():
-    
-    sample = {"age": 39, "workclass": "State-gov", "fnlgt": 77516, "education": "Bachelors", 
-                "education-num": 13, "marital-status": "Never-married", "occupation": "Adm-clerical", 
-                "relationship": "Not-in-family", "race": "White", "sex": "Male", "capital-gain": 2174, 
-                "capital-loss": 0, "hours-per-week": 40, "native-country": "United-States"}
-    r = client.post("/predict", data=json.dumps(sample))
+def test_api_prediction_negative(sample_negative):
+    r = client.post("/predict", data=json.dumps(sample_negative))
     prediction = r.json()
     assert r.status_code == 200
     assert prediction['prediction'] == 0
+
+def test_api_prediction_positive(sample_positive):
+    r = client.post("/predict", data=json.dumps(sample_positive))
+    prediction = r.json()
+    assert r.status_code == 200
+    assert prediction['prediction'] == 1
+
