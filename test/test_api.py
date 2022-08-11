@@ -23,3 +23,4 @@ def test_api_prediction():
     r = client.post("/predict", data=json.dumps(sample))
     prediction = r.json()
     assert r.status_code == 200
+    assert prediction['prediction'] == 0

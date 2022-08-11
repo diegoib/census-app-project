@@ -33,7 +33,7 @@ class Item(BaseModel):
     native_country: str = Field(alias='native-country')
 
 class Response(BaseModel):
-    prediction: List
+    prediction: int
 
 
 app = FastAPI()
@@ -69,5 +69,5 @@ async def predict(input_data: Item):
     X, _, _, _ = process_data(input_df, 
         categorical_features=cat_features, training=False, encoder=encoder
     )
-    preds = inference(model, X)
-    return {'prediction': list(preds)}
+    pred = inference(model, X)[0]
+    return {'prediction': pred}
