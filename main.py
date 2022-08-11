@@ -44,7 +44,7 @@ async def welcome_message():
     return "Welcome to the API. Check the docs at '/docs'"
 
 
-@app.post("/predict")#, response_model=Response)
+@app.post("/predict", response_model=Response)
 async def predict(input_data: Item):
 
     data = input_data.dict()
