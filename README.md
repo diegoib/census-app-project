@@ -2,7 +2,6 @@
 Development of a web app that makes predictions on census data. 
 
 Pasos que faltan:
-- crear github actions (pytest y flake8), conectar con dvc y s3 para hacer los tests
 - levantar el server
 
 Completados:
@@ -12,9 +11,10 @@ Completados:
 - crear la API
 - añadidos slices
 - escribir model card
+- crear github actions (pytest y flake8), conectar con dvc y s3 para hacer los tests
 
 Rubrica:
-- git: FALTA
+- git: COMPLETO
 - Model building: COMPLETO
 - API Creation: COMPLETO
 - API Deployment: FALTA
