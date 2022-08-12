@@ -21,8 +21,8 @@ def train_model(X_train, y_train):
     """
     logreg = LogisticRegression()
     logreg.fit(X_train, y_train)
-    
-    return logreg    
+
+    return logreg
 
 
 def compute_model_metrics(y, preds):
@@ -67,16 +67,25 @@ def inference(model, X):
 
 def evaluate_slices(df, y, preds, columns: list = []):
 
-    df = pd.concat([df.reset_index(), pd.Series(y, name='y'), pd.Series(preds, name='preds')], axis=1)
+    df = pd.concat([df.reset_index(), pd.Series(y, name='y'),
+                   pd.Series(preds, name='preds')], axis=1)
     results = []
-    
+
     for col in columns:
-        
+
         for cat in df[col].unique():
             slice = df[df[col] == cat]
-            precision, recall, fbeta = compute_model_metrics(slice['y'], slice['preds'])
+            precision, recall, fbeta = compute_model_metrics(
+                slice['y'], slice['preds'])
             results.append([col, cat, precision, recall, fbeta])
-            
-    df_results = pd.DataFrame(results, columns = ['Variable', 'Label', 'precision', 'recall', 'fbeta'])
+
+    df_results = pd.DataFrame(
+        results,
+        columns=[
+            'Variable',
+            'Label',
+            'precision',
+            'recall',
+            'fbeta'])
     df_results.to_csv('outputs/slice_output.txt', index=False)
     print(df_results)

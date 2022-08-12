@@ -8,23 +8,25 @@ def data():
     df = pd.read_csv('data/census_clean.csv')
     return df
 
+
 @pytest.fixture(scope='session')
 def sample_negative():
     sample = {
-        "age": 39, 
-        "workclass": "State-gov", 
-        "fnlgt": 77516, "education": 
-        "Bachelors", 
-        "education-num": 13, 
-        "marital-status": "Never-married", 
-        "occupation": "Adm-clerical", 
-        "relationship": "Not-in-family", 
-        "race": "White", "sex": "Male", 
-        "capital-gain": 2174, 
-        "capital-loss": 0, 
-        "hours-per-week": 40, 
+        "age": 39,
+        "workclass": "State-gov",
+        "fnlgt": 77516, "education":
+        "Bachelors",
+        "education-num": 13,
+        "marital-status": "Never-married",
+        "occupation": "Adm-clerical",
+        "relationship": "Not-in-family",
+        "race": "White", "sex": "Male",
+        "capital-gain": 2174,
+        "capital-loss": 0,
+        "hours-per-week": 40,
         "native-country": "United-States"}
     return sample
+
 
 @pytest.fixture(scope='session')
 def sample_positive():

@@ -51,4 +51,4 @@ jobs:
 
     - name: Run Flake8 # Final action which runs pytest. If any test fails, then this Action fails.
       run: |
-        flake8
+        flake8 --ignore=E501
