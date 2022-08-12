@@ -1,9 +1,8 @@
+import sys
+sys.path.append('./')
 from main import app
 from fastapi.testclient import TestClient
 import json
-
-import sys
-sys.path.append('./')
 
 
 client = TestClient(app)

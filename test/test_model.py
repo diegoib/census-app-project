@@ -1,9 +1,8 @@
+import sys
+sys.path.append('./')
 from src.ml.model import train_model, inference
 from src.ml.data import process_data
 from sklearn.linear_model import LogisticRegression
-
-import sys
-sys.path.append('./')
 
 
 def test_process_data(data):

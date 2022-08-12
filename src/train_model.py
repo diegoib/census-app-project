@@ -1,3 +1,5 @@
+import sys
+sys.path.append('./')
 from src.ml.model import train_model, compute_model_metrics, \
     inference, evaluate_slices
 from src.ml.data import process_data
@@ -6,8 +8,6 @@ import joblib
 import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
-import sys
-sys.path.append('./')
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")

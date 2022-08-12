@@ -1,4 +1,5 @@
-
+import sys
+sys.path.append('./')
 from src.schemas import Item, Response
 from src.ml.model import inference
 from src.ml.data import process_data
@@ -6,8 +7,6 @@ import joblib
 import numpy as np
 import pandas as pd
 from fastapi import FastAPI
-import sys
-sys.path.append('./')
 
 
 app = FastAPI()
