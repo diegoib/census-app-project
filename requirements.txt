@@ -1,7 +1,6 @@
 pandas
 dvc
 dvc[s3]
-json
 fastapi
 pydantic
 scikit-learn
