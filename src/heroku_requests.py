@@ -24,7 +24,7 @@ print(response.json())
 
 # POST request
 response = requests.post(
-    'https://diego-udacity-app.herokuapp.com/predict',
+    'https://diego-udacity-app.herokuapp.com/predict/',
     data=json.dumps(sample))
 print(response.status_code)
 print(response.json())

@@ -7,7 +7,30 @@ import joblib
 import numpy as np
 import pandas as pd
 from fastapi import FastAPI
+import os
 
+
+# To run dvc in Heroku
+if "DYNO" in os.environ and os.path.isdir(".dvc"):
+    print("Running DVC")
+    os.system("dvc config core.no_scm true")
+    if os.system("dvc pull") != 0:
+        exit("Pull failed")
+    os.system("rm -r .dvc .apt/usr/lib/dvc")
+
+model = joblib.load('model/finalized_model.sav')
+encoder = joblib.load('model/cat_encoder.sav')
+
+cat_features = [
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "native-country",
+]
 
 app = FastAPI()
 
@@ -27,22 +50,6 @@ async def predict(input_data: Item):
                 data.values())).reshape(
             1, -1), columns=data.keys())
     input_df.columns = [col.replace('_', '-') for col in input_df.columns]
-
-#    return input_df
-
-    model = joblib.load('model/finalized_model.sav')
-    encoder = joblib.load('model/cat_encoder.sav')
-
-    cat_features = [
-        "workclass",
-        "education",
-        "marital-status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native-country",
-    ]
     X, _, _, _ = process_data(
         input_df,
         categorical_features=cat_features,
