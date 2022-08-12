@@ -1,0 +1,54 @@
+name: Pytest & Flake8
+
+on: [push] 
+
+jobs:
+  build:
+
+    # Which OS this runs on, you can also build on Windows or MacOS.
+    runs-on: ubuntu-latest
+    
+    # You can build against multiple Python versions.
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    
+    # Calling a pre-built GitHub Action which allows your Action to access your repository.
+    - uses: actions/checkout@v2 
+    - uses: iterative/setup-dvc@v1
+    
+    # Name of an action that sets up Python.
+    - name: Set up Python ${{ matrix.python-version }} 
+      uses: actions/setup-python@v2 # A pre-built GitHub Action that sets up a Python environment.
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies # The first step that isn't just calling another action.
+      run: |
+        python -m pip install --upgrade pip # Upgrade pip to the latest version.
+        pip install pytest flake8
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi # If we have a requirements.txt, then install it.
+    
+    # Configuring AWS credentials
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: us-east-2
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        
+    # Set up DVC. 
+    - name: DVC pull
+      run: |
+          echo "Running dvc pull"
+          dvc pull
+          
+    - name: Test with pytest # Final action which runs pytest. If any test fails, then this Action fails.
+      run: |
+        pytest
+
+    - name: Run Flake8 # Final action which runs pytest. If any test fails, then this Action fails.
+      run: |
+        flake8
