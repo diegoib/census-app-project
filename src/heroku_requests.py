@@ -1,4 +1,5 @@
 import requests
+import json
 
 sample = {
     "age": 39,
@@ -22,8 +23,8 @@ print(response.status_code)
 print(response.json())
 
 # POST request
-#response = requests.post(
-#    'https://diego-udacity-app.herokuapp.com/predict',
-#    data=json.dumps(sample))
-#print(response.status_code)
-#print(response.json())
+response = requests.post(
+    'https://diego-udacity-app.herokuapp.com/predict',
+    data=json.dumps(sample))
+print(response.status_code)
+print(response.json())
